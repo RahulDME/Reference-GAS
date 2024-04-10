@@ -1,5 +1,5 @@
 /**
- * Returns an array with no empty elements.
+ * Returns an array with unique elements
  *
  * @param {*} x
  * @returns {Array}
