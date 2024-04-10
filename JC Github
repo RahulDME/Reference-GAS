@@ -21,6 +21,8 @@
   return result;
 }
 
+
+---------------------------------------------------------------------------------------------------------------------------------------
 /**
  * Returns an array with no empty elements.
  *
@@ -37,6 +39,7 @@ function rmEmptyEl(range) {
 }
 
 
+---------------------------------------------------------------------------------------------------------------------------------------
 /**
  * Returns an array of objects. Objects have two properties, count and value.
  * @param {Array} arr
@@ -65,5 +68,48 @@ function countOfValIn2(arr1) {
   
   let result = Array.from(map, ([value, count]) => [value, count]);
   
+  return result;
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Returns an array of the common elements in both arrays.
+ * @param {Array} arrA
+ * @param {Array} arrB
+ * @returns {Array}
+ * @customfunction
+ */
+
+function Intercross(arrA, arrB) {
+  var a = 0;
+  var b = 0;
+  var result = [];
+
+  // Custom sort function that works for both numbers and strings
+  function customSort(x, y) {
+    if (typeof x === 'number' && typeof y === 'number') {
+      return x - y;
+    } else {
+      return x.toString().localeCompare(y.toString());
+    }
+  }
+
+  // Sorting arrays with the custom sort function
+  arrA.sort(customSort);
+  arrB.sort(customSort);
+
+  // Finding common elements
+  while (a < arrA.length && b < arrB.length) {
+    if (arrA[a].toString() < arrB[b].toString()) {
+      a++;
+    } else if (arrA[a].toString() > arrB[b].toString()) {
+      b++;
+    } else {
+      result.push(arrA[a]);
+      a++;
+      b++;
+    }
+  }
   return result;
 }
