@@ -1,0 +1,69 @@
+/**
+ * Returns an array with no empty elements.
+ *
+ * @param {*} x
+ * @returns {Array}
+ * @customfunction
+ */
+
+  function rmDuplicatesFrom(arr) {
+  //var arr = [1, 2, 3, 1, 2, 3, 4,];
+  var check  = {};
+  var result = [];
+  var j = 0;
+  for(var i = 0; i < arr.length; i++) {
+    var item = arr[i];
+    if(check[item] !== 1) {   //checks if contains the array element
+      check[item] = 1;        //assign 1 to the element
+      result[j++] = item;    //add element to the result array
+    }
+  }
+  return result;
+}
+
+/**
+ * Returns an array with no empty elements.
+ *
+ * @param {Array} range - The input range of cells.
+ * @returns {Array} - An array with no empty elements.
+ * @customfunction
+ */
+function rmEmptyEl(range) {
+  var values = range.flat(); // Flattens the 2D array into 1D array
+  
+  return values.filter(function(item) {
+    return item !== undefined && item !== '';
+  });
+}
+
+
+/**
+ * Returns an array of objects. Objects have two properties, count and value.
+ * @param {Array} arr
+ * @property {value} a value found in the array
+ * @property {count} count of the value in the array
+ * @returns {Object[]}
+ * @customfunction
+ */
+
+
+function countOfValIn2(arr1) {
+  let flatArr = [].concat(...arr1);
+  
+  let map = new Map();
+  
+  // Count the frequency of each non-empty value
+  for (let value of flatArr) {
+    if (value !== "") {
+      if (map.has(value)) {
+        map.set(value, map.get(value) + 1);
+      } else {
+        map.set(value, 1);
+      }
+    }
+  }
+  
+  let result = Array.from(map, ([value, count]) => [value, count]);
+  
+  return result;
+}
