@@ -1,1 +1,0 @@
-=LET( dates , SEQUENCE(365,1,TODAY(),1) , FILTER( dates , WEEKDAY(dates,2)<6 ))
