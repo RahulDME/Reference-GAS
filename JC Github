@@ -1,12 +1,12 @@
 /**
- * Returns an array with unique elements
+ * Returns an array with unique elements.
  *
  * @param {*} x
  * @returns {Array}
  * @customfunction
  */
 
-  function rmDuplicatesFrom(arr) {
+  function rmDuplicatesFrom2(arr) {
   //var arr = [1, 2, 3, 1, 2, 3, 4,];
   var check  = {};
   var result = [];
@@ -21,8 +21,8 @@
   return result;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////
 
----------------------------------------------------------------------------------------------------------------------------------------
 /**
  * Returns an array with no empty elements.
  *
@@ -38,8 +38,8 @@ function rmEmptyEl(range) {
   });
 }
 
+////////////////////////////////////////////////////////////////////////////////////////
 
----------------------------------------------------------------------------------------------------------------------------------------
 /**
  * Returns an array of objects. Objects have two properties, count and value.
  * @param {Array} arr
@@ -71,7 +71,8 @@ function countOfValIn2(arr1) {
   return result;
 }
 
----------------------------------------------------------------------------------------------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Returns an array of the common elements in both arrays.
@@ -80,6 +81,7 @@ function countOfValIn2(arr1) {
  * @returns {Array}
  * @customfunction
  */
+
 
 function Intercross(arrA, arrB) {
   var a = 0;
@@ -113,3 +115,81 @@ function Intercross(arrA, arrB) {
   }
   return result;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Returns a string of array values. 
+ * Elements are separated by a delimiter and a space.
+ *
+ * @param {Array} arr
+ * @param {string} delim
+ * @returns {string}
+ * @customfunction
+ */
+
+function delimStrFromArr2(arr, delim) {
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var result  = "";
+  for (var i = 0; i < _arr.length; i++) {
+    result += _arr[i] + delim + " ";
+  }
+  result = result.slice(0, -2);
+  return result;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Removes duplicates from an array.
+ *
+ * @param {Array} arr
+ * @returns {Array}
+ */
+function rmDuplicatesFromDelimit(arr) {
+  return arr.filter(function (item, index, self) {
+    return self.indexOf(item) === index;
+  });
+}
+
+/**
+ * Returns a string of array values.
+ * Elements are separated by a delimiter and a space, each followed by a modification.
+ *
+ * @param {Array} arr
+ * @param {string} delim
+ * @param {string} mod Modification to append to each item in the array.
+ * @returns {string}
+ * @customfunction
+ */
+function delimStrFromArrMod2(arr, delim, mod) {
+  var _arr = rmDuplicatesFromDelimit(arr).sort();
+  var result = "";
+  for (var i = 0; i < _arr.length; i++) {
+    result += _arr[i] + mod + delim + " ";
+  }
+  result = result.slice(0, -2);
+  return result;
+  //array-rahul,delimiter-",",mod-@arihant.com
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns an array containing all values in a two-dimensional array.
+ *
+ * @param {Array[]} twoDArr
+ * @returns {Array}
+ * @customfunction
+ */
+
+function flattenTwoDArr2(twoDArr) {
+  //var arry =["a", "b", "c", "a", "b", "c", "a"];
+  var result = twoDArr.reduce(function(a, b) {
+    return a.concat(b);
+  });
+  return result;
+}
+
+
