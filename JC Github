@@ -193,3 +193,153 @@ function flattenTwoDArr2(twoDArr) {
 }
 
 
+////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Sorts a range based on the specified column index in ascending or descending order.
+ *
+ * @param {range} data The entire data range (as a 2D array).
+ * @param {number} columnIndex The index of the column to sort by (1-based index).
+ * @param {boolean} descending True for descending order, false for ascending order.
+ * @return The sorted 2D array.
+ * @customfunction
+ */
+function sortRangeBySinColumn(data, columnIndex, descending) {
+  // Adjust columnIndex to 0-based for JavaScript array handling
+  columnIndex -= 1;
+
+  // Sort the data array
+  data.sort(function(a, b) {
+    var valueA = a[columnIndex];
+    var valueB = b[columnIndex];
+
+    if (valueA < valueB) {
+      return descending ? 1 : -1;
+    } else if (valueA > valueB) {
+      return descending ? -1 : 1;
+    } else {
+      return 0;
+    }
+  });
+
+  return data;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Sorts a range based on the specified column indexes in ascending or descending order.
+ *
+ * @param {range} data The entire data range (as a 2D array).
+ * @param {number} columnIndex1 The index of the first column to sort by (1-based index).
+ * @param {number} columnIndex2 The index of the second column to sort by (1-based index).
+ * @param {boolean} descending True for descending order, false for ascending order.
+ * @return The sorted 2D array.
+ * @customfunction
+ */
+function sortRangeByMulColumns(data, columnIndex1, columnIndex2, descending) {
+  // Adjust column indexes to 0-based for JavaScript array handling
+  columnIndex1 -= 1;
+  columnIndex2 -= 1;
+
+  // Sort the data array
+  data.sort(function(a, b) {
+    var valueA1 = a[columnIndex1];
+    var valueB1 = b[columnIndex1];
+    var valueA2 = a[columnIndex2];
+    var valueB2 = b[columnIndex2];
+
+    // First sort by columnIndex1
+    if (valueA1 < valueB1) {
+      return descending ? 1 : -1;
+    } else if (valueA1 > valueB1) {
+      return descending ? -1 : 1;
+    } else {
+      // If values are equal in columnIndex1, sort by columnIndex2
+      if (valueA2 < valueB2) {
+        return descending ? 1 : -1;
+      } else if (valueA2 > valueB2) {
+        return descending ? -1 : 1;
+      } else {
+        return 0;
+      }
+    }
+  });
+
+  return data;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Unifies names in a Google Sheet based on the provided column indices.
+ * This script is dynamic and can accommodate additional name columns in the future.
+ *
+ * @param {string[][]} rangeData - 2D array containing the data range.
+ * @param {number[]} nameCols - Array of column indices (1-indexed) where the name parts are located.
+ * @param {string} newColName - The header for the new column with the unified names.
+ * @return {string[][]} - The data range with an additional column for the unified names.
+ * @customfunction
+ */
+function unifyNames(rangeData, nameCols, newColName) {
+  // Check if the first row contains headers and add the new column name
+  var headers = rangeData[0];
+  var hasHeader = headers.length >= Math.max.apply(null, nameCols);
+  if (hasHeader) {
+    headers.push(newColName);
+  }
+
+  // Process each row to unify the names
+  var result = rangeData.map(function(row, index) {
+    if (index === 0 && hasHeader) {
+      // Return the headers row with the new column name
+      return row;
+    } else {
+      // Unify the names from specified columns
+      var unifiedName = nameCols.map(function(colIndex) {
+        return row[colIndex - 1]; // Adjust for zero-based indexing
+      }).join(' ').trim();
+      // Add the unified name to the row
+      row.push(unifiedName);
+      return row;
+    }
+  });
+
+  return result;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * This is not working
+ * Combines data based on unique values in columns B and C
+ * @param {string[][]} rangeData - 2D array containing the data range.
+ * @return {string[][]} - Combined data based on unique values in columns B and C.
+ * @customfunction
+ */
+function combineobj(rangeData) {
+  try {
+    var unique = [];
+    unique.push(rangeData[0]);
+    var append = true;
+    for (var i = 1; i < rangeData.length; i++) {
+      append = true;
+      for (var j = 0; j < unique.length; j++) {
+        if (
+          rangeData[i][1] === unique[j][1] &&
+          rangeData[i][2] === unique[j][2]
+        ) {
+          unique[j][0] = unique[j][0] + ", " + rangeData[i][0];
+          append = false;
+          break;
+        }
+      }
+      if (append) unique.push(rangeData[i]);
+    }
+    return unique;
+  } catch (err) {
+    console.error(err);
+    return "Error occurred: " + err.message;
+  }
+}
